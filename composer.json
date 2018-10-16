@@ -21,6 +21,16 @@
             "ChrGriffin\\LaravelDefer\\": "src/"
         }
     },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "ChrGriffin\\LaravelDefer\\LaravelDeferProvider"
+            ],
+            "aliases": {
+                "LaravelDefer": "ChrGriffin\\LaravelDefer\\Facades\\LaravelDefer"
+            }
+        }
+    },
     "minimum-stability": "dev",
     "prefer-stable": true
 }

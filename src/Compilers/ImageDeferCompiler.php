@@ -1,6 +1,6 @@
 <?php
 
-namespace ChrGriffin\LaravelDefer;
+namespace ChrGriffin\LaravelDefer\Compilers;
 
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\View\Compilers\BladeCompiler;

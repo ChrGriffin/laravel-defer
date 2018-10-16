@@ -83,20 +83,6 @@ class LaravelDeferServiceProvider extends ServiceProvider
     }
 
     /**
-     * Register the main package class.
-     *
-     * @return void
-     */
-    protected function registerPackage()
-    {
-        $this->app->singleton('defer', function () {
-            return new LaravelDefer();
-        });
-
-        $this->app->alias('defer', LaravelDefer::class);
-    }
-
-    /**
      * Services provided by the provider.
      *
      * @return array
@@ -104,7 +90,6 @@ class LaravelDeferServiceProvider extends ServiceProvider
     public function provides()
     {
         return [
-            'defer',
             'defer.compiler'
         ];
     }

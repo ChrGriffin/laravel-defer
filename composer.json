@@ -25,10 +25,7 @@
         "laravel": {
             "providers": [
                 "ChrGriffin\\LaravelDefer\\LaravelDeferServiceProvider"
-            ],
-            "aliases": {
-                "LaravelDefer": "ChrGriffin\\LaravelDefer\\Facades\\LaravelDefer"
-            }
+            ]
         }
     },
     "minimum-stability": "dev",

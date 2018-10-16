@@ -1,0 +1,13 @@
+{
+    "name": "chrgriffin/laravel-defer",
+    "description": "Automatically defer loading your images until after page load in Laravel.",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Christian Griffin",
+            "email": "christian.griffin@live.com"
+        }
+    ],
+    "require": {}
+}

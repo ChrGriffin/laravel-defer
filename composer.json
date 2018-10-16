@@ -24,7 +24,7 @@
     "extra": {
         "laravel": {
             "providers": [
-                "ChrGriffin\\LaravelDefer\\LaravelDeferProvider"
+                "ChrGriffin\\LaravelDefer\\LaravelDeferServiceProvider"
             ],
             "aliases": {
                 "LaravelDefer": "ChrGriffin\\LaravelDefer\\Facades\\LaravelDefer"

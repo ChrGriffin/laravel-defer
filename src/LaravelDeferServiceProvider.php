@@ -74,27 +74,12 @@ class LaravelDeferServiceProvider extends ServiceProvider
     protected function registerCompiler()
     {
         $this->app->singleton('defer.compiler', function (Container $app) {
-            $blade = $app['defer.blade'];
             $files = $app['files'];
             $storagePath = $app->config->get('view.compiled');
-            return new Compilers\ImageDeferCompiler($blade, $files, $storagePath);
+            return new Compilers\ImageDeferCompiler($files, $storagePath);
         });
 
         $this->app->alias('defer.compiler', Compilers\ImageDeferCompiler::class);
-    }
-
-    /**
-     * Register the main package class.
-     *
-     * @return void
-     */
-    protected function registerPackage()
-    {
-        $this->app->singleton('defer', function () {
-            return new LaravelDefer();
-        });
-
-        $this->app->alias('defer', LaravelDefer::class);
     }
 
     /**
@@ -105,7 +90,6 @@ class LaravelDeferServiceProvider extends ServiceProvider
     public function provides()
     {
         return [
-            'defer',
             'defer.compiler'
         ];
     }

@@ -74,10 +74,9 @@ class LaravelDeferServiceProvider extends ServiceProvider
     protected function registerCompiler()
     {
         $this->app->singleton('defer.compiler', function (Container $app) {
-            $blade = $app['defer.blade'];
             $files = $app['files'];
             $storagePath = $app->config->get('view.compiled');
-            return new Compilers\ImageDeferCompiler($blade, $files, $storagePath);
+            return new Compilers\ImageDeferCompiler($files, $storagePath);
         });
 
         $this->app->alias('defer.compiler', Compilers\ImageDeferCompiler::class);

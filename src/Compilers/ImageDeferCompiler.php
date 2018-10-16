@@ -15,6 +15,13 @@ class ImageDeferCompiler extends BladeCompiler
     public $compilers = [];
 
     /**
+     * Paths to ignore when compiling templates.
+     *
+     * @var array
+     */
+    public $ignoredPaths = [];
+
+    /**
      * ImageDeferCompiler constructor.
      *
      * @param Filesystem $files

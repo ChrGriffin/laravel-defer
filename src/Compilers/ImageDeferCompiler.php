@@ -28,7 +28,7 @@ class ImageDeferCompiler extends BladeCompiler
         parent::__construct($files, $cachePath);
 
         $this->ignoredPaths = $ignoredPaths;
-        $this->compilers[] = 'Defer';
+        array_unshift($this->compilers, 'Defer');
     }
 
     /**

@@ -7,6 +7,7 @@ use Illuminate\Contracts\Container\Container;
 use Illuminate\View\Engines\CompilerEngine;
 use Illuminate\Foundation\Application as LaravelApplication;
 use Laravel\Lumen\Application as LumenApplication;
+use Illuminate\Support\Facades\Blade;
 
 class LaravelDeferServiceProvider extends ServiceProvider
 {
@@ -19,6 +20,7 @@ class LaravelDeferServiceProvider extends ServiceProvider
     {
         $this->configure();
         $this->configureCompiler();
+        $this->bladeDirectives();
     }
 
     /**
@@ -53,6 +55,18 @@ class LaravelDeferServiceProvider extends ServiceProvider
         });
 
         $this->app->view->addExtension('blade.php', 'blade');
+    }
+
+    /**
+     * Add the custom blade directives.
+     *
+     * @return void
+     */
+    protected function bladeDirectives()
+    {
+        Blade::directive('deferJS', function ($expression) {
+            return LaravelDefer::js();
+        });
     }
 
     /**

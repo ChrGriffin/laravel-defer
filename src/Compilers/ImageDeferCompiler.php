@@ -28,6 +28,8 @@ class ImageDeferCompiler extends BladeCompiler
         parent::__construct($files, $cachePath);
 
         $this->ignoredPaths = $ignoredPaths;
+        // by putting the image defer compiler at the start of the array, we allow other
+        // functionality like custom blade directives to remain unaffected
         array_unshift($this->compilers, 'Defer');
     }
 
@@ -63,28 +65,20 @@ class ImageDeferCompiler extends BladeCompiler
 
         foreach($matches[0] as $i => $imgTag) {
 
-            $class = 'ld' . md5(uniqid(mt_rand(), true));
-            $src = $matches[1][$i];
-
-            preg_match("/class\s*=\s*['\"]([^'\"]*?)['\"]/", $imgTag, $classMatches);
-            if(!empty($classMatches[1])) {
-                // add the new class to the existing classes
-                $newTag = preg_replace("/(<img\s[^>]*?class\s*=\s*['\"][^'\"]*?)(['\"][^>]*?>)/", '$1 ' . $class . '$2', $imgTag);
-            }
-            else {
-                // add a class attribute with the class
-                $newTag = preg_replace("/(<img\s[^>]*?)([^>]*?>)/", '$1 class="' . $class . '" $2', $imgTag);
-            }
+            // copy the src attribute to the data-src attribure
+            $newTag = preg_replace(
+                "/(<img\s[^>]*?)([^>]*?>)/",
+                '$1data-src="' . $matches[1][$i] . '"$2',
+                $imgTag
+            );
 
             // remove the src attribute from the img tag
-            $newTag = preg_replace("/src\s*=\s*['\"]([^'\"]*?)['\"]/", '', $newTag);
+            $newTag = preg_replace("/\ssrc\s*=\s*['\"]([^'\"]*?)['\"]/", '', $newTag);
 
             // add the edited img tag back into the template
             $value = str_replace($imgTag, $newTag, $value);
-
-            LaravelDefer::addImage($src, $class);
         }
-
+        
         return $value;
     }
 }

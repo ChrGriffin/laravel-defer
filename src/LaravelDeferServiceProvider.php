@@ -40,6 +40,9 @@ class LaravelDeferServiceProvider extends ServiceProvider
         }
 
         $this->mergeConfigFrom($path, 'defer');
+        
+        LaravelDefer::setFunctionName(config('defer.function_name'));
+        LaravelDefer::setWithScriptTags(config('defer.with_script_tags'));
     }
 
     /**
@@ -65,7 +68,7 @@ class LaravelDeferServiceProvider extends ServiceProvider
     protected function bladeDirectives()
     {
         Blade::directive('deferJS', function ($expression) {
-            return LaravelDefer::js();
+            return "<?php echo ChrGriffin\\LaravelDefer\\LaravelDefer::js(); ?>";
         });
     }
 

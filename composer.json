@@ -27,7 +27,7 @@
                 "ChrGriffin\\LaravelDefer\\LaravelDeferServiceProvider"
             ],
             "aliases": {
-                "LaravelDefer": "ChrGriffin\\LaravelDefer\\\\Facades\\LaravelDefer"
+                "LaravelDefer": "ChrGriffin\\LaravelDefer\\Facades\\LaravelDefer"
             }
         }
     },

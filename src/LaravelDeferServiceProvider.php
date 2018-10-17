@@ -63,7 +63,7 @@ class LaravelDeferServiceProvider extends ServiceProvider
     public function register()
     {
         $this->registerCompiler();
-        $this->app->alias('defer', LaravelDefer::class);
+        $
     }
 
     /**
@@ -80,6 +80,20 @@ class LaravelDeferServiceProvider extends ServiceProvider
         });
 
         $this->app->alias('defer.compiler', Compilers\ImageDeferCompiler::class);
+    }
+
+    /**
+     * Register the core package class.
+     *
+     * @return void
+     */
+    protected function registerPackage()
+    {
+        $this->app->singleton('defer', function (Container $app) {
+            return new LaravelDefer();
+        });
+
+        $this->app->alias('defer', LaravelDefer::class);
     }
 
     /**

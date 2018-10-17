@@ -45,10 +45,10 @@ class ImageDeferCompiler extends BladeCompiler
      */
     public function compileDefer($value)
     {
-        if ($this->ignoredPaths) {
-            $path = str_replace('\\', '/', $this->getPath());
-            foreach ($this->ignoredPaths as $ignoredPath) {
-                if (strpos($path, $ignoredPath) !== false) {
+        if(!empty($this->ignoredPaths)) {
+            $thisPath = str_replace('\\', '/', $this->getPath());
+            foreach($this->ignoredPaths as $ignoredPath) {
+                if(strpos($thisPath, $ignoredPath) !== false) {
                     return $value;
                 }
             }
@@ -65,6 +65,9 @@ class ImageDeferCompiler extends BladeCompiler
      */
     public function render($value)
     {
+        $imgPattern = "/<img\s[^>]*?src\s*=\s*['\"]([^'\"]*?)['\"][^>]*?>/";
+        preg_match_all($imgPattern, $value, $matches);
+        dd($matches);
         return $value;
     }
 }

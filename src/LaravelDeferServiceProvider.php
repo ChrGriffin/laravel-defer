@@ -63,6 +63,7 @@ class LaravelDeferServiceProvider extends ServiceProvider
     public function register()
     {
         $this->registerCompiler();
+        $this->app->alias('defer', LaravelDefer::class);
     }
 
     /**
@@ -89,6 +90,7 @@ class LaravelDeferServiceProvider extends ServiceProvider
     public function provides()
     {
         return [
+            'defer',
             'defer.compiler'
         ];
     }

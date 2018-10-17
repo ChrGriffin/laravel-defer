@@ -63,7 +63,7 @@ class LaravelDeferServiceProvider extends ServiceProvider
     public function register()
     {
         $this->registerCompiler();
-        $
+        $this->registerPackage();
     }
 
     /**

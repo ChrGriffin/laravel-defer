@@ -4,16 +4,10 @@ namespace ChrGriffin\LaravelDefer\Compilers;
 
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\View\Compilers\BladeCompiler;
+use ChrGriffin\LaravelDefer\LaravelDefer;
 
 class ImageDeferCompiler extends BladeCompiler
 {
-    /**
-     * Blade compilers.
-     *
-     * @var array
-     */
-    public $compilers = [];
-
     /**
      * Paths to ignore when compiling templates.
      *
@@ -54,7 +48,7 @@ class ImageDeferCompiler extends BladeCompiler
             }
         }
 
-        return $this->render($value);
+        return $this->renderDefer($value);
     }
 
     /**
@@ -63,11 +57,34 @@ class ImageDeferCompiler extends BladeCompiler
      * @param string $value
      * @return string
      */
-    public function render($value)
+    public function renderDefer($value)
     {
-        $imgPattern = "/<img\s[^>]*?src\s*=\s*['\"]([^'\"]*?)['\"][^>]*?>/";
-        preg_match_all($imgPattern, $value, $matches);
-        dd($matches);
+        preg_match_all("/<img\s[^>]*?src\s*=\s*['\"]([^'\"]*?)['\"][^>]*?>/", $value, $matches);
+
+        foreach($matches[0] as $i => $imgTag) {
+
+            $class = 'ld' . md5(uniqid(mt_rand(), true));
+            $src = $matches[1][$i];
+
+            preg_match("/class\s*=\s*['\"]([^'\"]*?)['\"]/", $imgTag, $classMatches);
+            if(!empty($classMatches[1])) {
+                // add the new class to the existing classes
+                $newTag = preg_replace("/(<img\s[^>]*?class\s*=\s*['\"][^'\"]*?)(['\"][^>]*?>)/", '$1 ' . $class . '$2', $imgTag);
+            }
+            else {
+                // add a class attribute with the class
+                $newTag = preg_replace("/(<img\s[^>]*?)([^>]*?>)/", '$1 class="' . $class . '" $2', $imgTag);
+            }
+
+            // remove the src attribute from the img tag
+            $newTag = preg_replace("/src\s*=\s*['\"]([^'\"]*?)['\"]/", '', $newTag);
+
+            // add the edited img tag back into the template
+            $value = str_replace($imgTag, $newTag, $value);
+
+            LaravelDefer::addImage($src, $class);
+        }
+
         return $value;
     }
 }

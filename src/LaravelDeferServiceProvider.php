@@ -93,7 +93,7 @@ class LaravelDeferServiceProvider extends ServiceProvider
         $this->app->singleton('defer.compiler', function (Container $app) {
             $files = $app['files'];
             $storagePath = $app->config->get('view.compiled');
-            return new Compilers\ImageDeferCompiler($files, $storagePath);
+            return new Compilers\ImageDeferCompiler($files, $storagePath, config('defer.ignored_paths'));
         });
 
         $this->app->alias('defer.compiler', Compilers\ImageDeferCompiler::class);

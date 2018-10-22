@@ -4,7 +4,6 @@ namespace ChrGriffin\LaravelDefer\Compilers;
 
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\View\Compilers\BladeCompiler;
-use ChrGriffin\LaravelDefer\LaravelDefer;
 
 class ImageDeferCompiler extends BladeCompiler
 {
@@ -16,18 +15,32 @@ class ImageDeferCompiler extends BladeCompiler
     public $ignoredPaths = [];
 
     /**
+     * Images to ignore when compiling templates.
+     *
+     * @var array
+     */
+    public $ignoredImages = [];
+
+    /**
      * ImageDeferCompiler constructor.
      *
      * @param Filesystem $files
      * @param string $cachePath
      * @param array $ignoredPaths
+     * @param array $ignoredImages
      * @return void
      */
-    public function __construct(Filesystem $files, $cachePath, $ignoredPaths = [])
-    {
+    public function __construct(
+        Filesystem $files,
+        $cachePath,
+        $ignoredPaths = [],
+        $ignoredImages = []
+    ) {
         parent::__construct($files, $cachePath);
 
         $this->ignoredPaths = $ignoredPaths;
+        $this->ignoredImages = $ignoredImages;
+
         // by putting the image defer compiler at the start of the array, we allow other
         // functionality like custom blade directives to remain unaffected
         array_unshift($this->compilers, 'Defer');
@@ -64,6 +77,12 @@ class ImageDeferCompiler extends BladeCompiler
         preg_match_all("/<img\s[^>]*?src\s*=\s*['\"]([^'\"]*?)['\"][^>]*?>/", $value, $matches);
 
         foreach($matches[0] as $i => $imgTag) {
+
+            foreach($this->ignoredImages as $ignoredImage) {
+                if(strpos($matches[1][$i], $ignoredImage) !== false) {
+                    continue;
+                }
+            }
 
             // copy the src attribute to the data-src attribure
             $newTag = preg_replace(

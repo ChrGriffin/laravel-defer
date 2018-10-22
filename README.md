@@ -6,7 +6,7 @@ laravel-defer is a package that will automatically take ordinary image tags in y
 
 You can install via composer:
 
-```php
+```
 composer install chrgriffin/laravel-defer
 ```
 

@@ -77,10 +77,9 @@ class ImageDeferCompiler extends BladeCompiler
         preg_match_all("/<img\s[^>]*?src\s*=\s*['\"]([^'\"]*?)['\"][^>]*?>/", $value, $matches);
 
         foreach($matches[0] as $i => $imgTag) {
-
             foreach($this->ignoredImages as $ignoredImage) {
                 if(strpos($matches[1][$i], $ignoredImage) !== false) {
-                    continue;
+                    continue 2;
                 }
             }
 

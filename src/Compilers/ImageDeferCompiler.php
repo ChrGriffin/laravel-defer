@@ -68,7 +68,7 @@ class ImageDeferCompiler extends BladeCompiler
             // copy the src attribute to the data-src attribure
             $newTag = preg_replace(
                 "/(<img\s[^>]*?)([^>]*?>)/",
-                '$1data-src="' . $matches[1][$i] . '"$2',
+                '$1data-ldsrc="' . $matches[1][$i] . '"$2',
                 $imgTag
             );
 

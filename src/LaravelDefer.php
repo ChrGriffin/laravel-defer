@@ -66,9 +66,9 @@ class LaravelDefer
     public static function writeJsFunction()
     {
         return "function " . self::$functionName . "() {
-            elements = document.querySelectorAll('img[data-src]');
+            elements = document.querySelectorAll('img[data-ldsrc]');
             for(e=0; e<elements.length; e++) {
-                elements[e].src = elements[e].getAttribute('data-src');
+                elements[e].src = elements[e].getAttribute('data-ldsrc');
             }
         }";
     }

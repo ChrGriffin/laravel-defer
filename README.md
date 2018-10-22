@@ -10,8 +10,6 @@ You can install via composer:
 composer install chrgriffin/laravel-defer
 ```
 
-*but not yet because I haven't registered it yet lol*
-
 This package supports auto discovery, so if you are using Laravel 5.6 or higher, you're done!
 
 If not, you need to add the service provider to your providers array in `config/app.php`:
@@ -72,6 +70,27 @@ The last step is to call the `loadDeferredImages()` method (or whatever you call
 $(document).ready(function () {
     loadDeferredImages();
 });
+```
+
+## Skipping Templates or Images
+
+In the configuration file, you can specify Blade templates to skip when running the compiler:
+
+```php
+'ignored_paths' => [
+    '/resources/views/mail', // this will skip all Blade templates inside the mail folder
+    '/resources/views/nope.blade.php' // this will skip this specific template
+],
+```
+
+You can also specify specific images to skip when compiling:
+
+```php
+'ignored_images' => [
+    'https://i.warosu.org/data/vr/img/0021/46/1420008946756.jpg', // this will skip this particular image
+    'https://i.warosu.org/', // this will skip all images from this URL
+    '1420008946756.jpg' // this will skip any image with this filename
+],
 ```
 
 ## Under the Hood

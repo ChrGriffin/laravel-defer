@@ -26,7 +26,7 @@ You may also find it helpful to add the Facade to your array of aliases:
 
 You can also publish the configuration to your `config` folder:
 
-```php
+```
 php artisan vendor:publish
 ```
 
@@ -34,7 +34,7 @@ php artisan vendor:publish
 
 Once installed, you will likely need to clear your compiled views:
 
-```php
+```
 php artisan view:clear
 ```
 
